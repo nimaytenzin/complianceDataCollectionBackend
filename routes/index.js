@@ -53,26 +53,31 @@ router.get('/api/roads/get-road/:lap_id/:fid', roadController.getSpecific)
 
 // raw query for getting shapefiles as geojson
 
-//get all plots
 
-router.get('/api/shapefile/get-all-plots', (req,res)=> {
-    pool.query(`SELECT jsonb_build_object(
-        'type',     'FeatureCollection',
-        'features', jsonb_agg(features.feature)
-    )
-    FROM (
-      SELECT jsonb_build_object(
-        'type',       'Feature',
-        'id',         gid,
-        'geometry',   ST_AsGeoJSON(geom)::jsonb,
-        'properties', to_jsonb(inputs) - 'gid' - 'geom'
-      ) AS feature
-      FROM (SELECT * FROM trial_plots) inputs) features;`, (err, results) => {
-        if (err) {
-          throw err
-        }
-        res.send(results.rows[0].jsonb_build_object)
-      })
+// router.get('/api/shapefile/set-done/:lap_id/:gid', (req,res) => {
+//   console.log(typeof(parseInt(req.params.lap_id)))
+//     pool.query(`
+//     SELECT * FROM plots_shape  WHERE lap_id = 2 AND gid = 349
+//     `, (err, ress) => {
+//       if (err) {
+//         throw err
+//       }
+//       res.send(ress)
+//     });
+// })
+
+
+router.put('/api/shapefile/set-done/:lap_id/:gid', (req,res) => {
+  let lapid = parseInt(req.params.lap_id)
+  let giid = parseInt(req.params.gid)
+  pool.query(`
+  UPDATE plots_shape SET done = 'true' WHERE  lap_id = ${lapid} AND gid = ${giid}
+  `, (err, ress) => {
+    if (err) {
+      throw err
+    }
+    res.send(ress)
+  });
 })
 
 //get plots by lap id
@@ -88,7 +93,7 @@ router.get('/api/shapefile/get-plots/:lap_id', (req,res) => {
         'type',       'Feature',
         'id',         gid,
         'geometry',   ST_AsGeoJSON(geom)::jsonb,
-        'properties', to_jsonb(inputs) - 'gid' - 'geom'
+        'properties', to_jsonb(inputs)  - 'geom'
       ) AS feature  
       FROM (SELECT * FROM plots_shape where lap_id= ${lap_id}) inputs) features;`, (err, results) => {
         if (err) {

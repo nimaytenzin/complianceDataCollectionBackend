@@ -1,4 +1,5 @@
 const plot = require('../src/models').plot
+ 
 
 module.exports = {
 
@@ -20,9 +21,10 @@ module.exports = {
                 plot_use: req.body.plot_use,
                 max_height: req.body.max_height,
                 setback_e: req.body.setback_e,
+                parking:req.body.parking,
                 remarks: req.body.remarks
             })
-            .then((plotData) => res.status(200).send(plotData))
+            .then((plotData) => res.status(200).send({data:plotData, status: 'Success'}))
             .catch((error) => res.status(400).send(error))
     },
 

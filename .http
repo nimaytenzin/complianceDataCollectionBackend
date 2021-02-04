@@ -25,22 +25,25 @@
 #     "remarks": null
 # }
 
-POST http://localhost:3000/api/roads/add-road HTTP/1.1
-content-type: application/json
+# POST http://localhost:3000/api/roads/add-road HTTP/1.1
+# content-type: application/json
 
-{
-    "fid": 1,
-    "lap_id": 2,
-    "d_status": "req.body.d_status",
-    "row": 3.5,
-    "lanes": 2,
-    "carriage_width": 2.5,
-    "median": 0,
-    "parking_left": 0,
-    "parking_right": 3,
-    "light_left": 3,
-    "light_right": 2,
-    "drain_left": 1,
-    "drain_right": 0,
-    "remarks": null
-}
+# {
+#     "fid": 1,
+#     "lap_id": 2,
+#     "d_status": "req.body.d_status",
+#     "row": 3.5,
+#     "lanes": 2,
+#     "carriage_width": 2.5,
+#     "median": 0,
+#     "parking_left": 0,
+#     "parking_right": 3,
+#     "light_left": 3,
+#     "light_right": 2,
+#     "drain_left": 1,
+#     "drain_right": 0,
+#     "remarks": null
+# }
+
+PUT  http://localhost:3000/api/shapefile/set-done/1/4 HTTP/1.1
+Content-Type: application/json

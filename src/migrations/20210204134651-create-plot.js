@@ -29,6 +29,9 @@ module.exports = {
       setback_e: {
         type: Sequelize.STRING
       },
+      parking: {
+        type: Sequelize.INTEGER
+      },
       remarks: {
         type: Sequelize.TEXT
       },

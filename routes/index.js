@@ -25,7 +25,7 @@ router.get('/api/get-laps/:thromde_id', thromdeController.getLapbyThromde)
 
 
 // plots route
-router.get('/api/plots/get-plot/:lap_id', plotController.getSpecific)
+router.get('/api/plots/get-plot/:lap_id/:fid', plotController.getSpecific)
 router.get('/api/plots/get-plots/:lap_id', plotController.getByLapId)
 router.post('/api/plots/add-plot', plotController.add);
 router.put('/api/plots/update-plot/:lap_id/:gid', plotController.update)
@@ -33,12 +33,14 @@ router.put('/api/plots/update-plot/:lap_id/:gid', plotController.update)
 //footpath route
 router.get('/api/footpaths/get-all', footpathController.list);
 router.post('/api/footpaths/add-path',footpathController.add);
+router.get('/api/footpaths/get-path/:lap_id/:fid', footpathController.getSpecific)
 
 
 //road routes
 router.get('/api/roads/get-all',roadController.list);
 router.post('/api/roads/add-road',roadController.add);
 router.get('/api/roads/getByLap/:lap_id', roadController.getByLap)
+router.get('/api/roads/get-road/:lap_id/:fid', roadController.getSpecific)
 
 //footpath rotes
 // router.get('/api/footpaths/get-footpaths', footpathController.list);
@@ -50,55 +52,7 @@ router.get('/api/roads/getByLap/:lap_id', roadController.getByLap)
 
 
 // raw query for getting shapefiles as geojson
-router.get('/get-all-roads', (req,res) => { 
-  pool.query(
-    `select ST_AsGeoJSON(geom) from simtokha_plots ;`, (err,results)=>{
-        if (err){
-            throw err
-        }
-        const resp = results.rows.map((row)=>{
-            let geojson=JSON.parse(row.st_asgeojson);
-            geojson.properties = {}
-            return geojson;
-        })
-        // console.log(resp);
-        res.send(resp)
-    }
-   );
-})
 
-
-router.get('/api/shapefile/get-plots/:thromde_id/:lap_id', (req,res) => {
-    let thromde_id = req.params.thromde_id;
-    let lap_id = req.params.lap_id;
-    pool.query(
-      `select ST_AsGeoJSON(geom),gid,plot_id,precinct,area_acres,area_m2,coverage,setback,height,thromdeid,lap_id from plotshape Where thromdeid=${thromde_id} AND lap_id =${lap_id} ;`, (err,results)=>{
-          if (err){
-              throw err
-          }
-          console.log(results)
-          const resp = results.rows.map((row)=>{
-              let geojson=JSON.parse(row.st_asgeojson);
-              geojson.properties = {
-                thromde_id:row.thromdeid,
-                lap_id:row.lap_id,
-                gid:row.gid,
-                plot_id:row.plot_id,
-                precicnt:row.precicnt,
-                area_acres:row.area_acres,
-                area_m2:row.area_m2,
-                coverage:row.coverage,
-                setback:row.setback,
-                height:row.height  
-              }
-              return geojson;
-          })
-          // console.log(resp);
-          res.send(resp)
-      }
-     );
-  })
-  
 //get all plots
 
 router.get('/api/shapefile/get-all-plots', (req,res)=> {
@@ -136,17 +90,13 @@ router.get('/api/shapefile/get-plots/:lap_id', (req,res) => {
         'geometry',   ST_AsGeoJSON(geom)::jsonb,
         'properties', to_jsonb(inputs) - 'gid' - 'geom'
       ) AS feature  
-      FROM (SELECT * FROM trial_plots where lap_id= ${lap_id}) inputs) features;`, (err, results) => {
+      FROM (SELECT * FROM plots_shape where lap_id= ${lap_id}) inputs) features;`, (err, results) => {
         if (err) {
           throw err
         }
         res.send(results.rows[0].jsonb_build_object)
       })
 })
-
-
-
-
 
 
 

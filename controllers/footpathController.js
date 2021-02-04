@@ -30,7 +30,7 @@ module.exports = {
         return footpath
             .findAll({
                 where: {
-                    gid: req.params.gid,
+                    fid: req.params.fid,
                     lap_id:req.params.lap_id
                   }
             })

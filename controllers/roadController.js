@@ -31,11 +31,11 @@ module.exports = {
             .catch((error) => res.status(400).send(error))
     },
 
-    getById(req, res){
-        return roadsInLap
+    getSpecific(req, res){
+        return road
             .findAll({
                 where: {
-                    gid: req.params.gid,
+                    fid: req.params.fid,
                     lap_id:req.params.lap_id
                   }
             })

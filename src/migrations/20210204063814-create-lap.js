@@ -8,20 +8,21 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-
       lap_name: {
         type: Sequelize.STRING
       },
-      thromde_id:{
+      thromde_id: {
         type: Sequelize.INTEGER
       },
-      thromde_name:{
+      thromde_name: {
         type: Sequelize.STRING
       },
       createdAt: {
+        allowNull: false,
         type: Sequelize.DATE
       },
       updatedAt: {
+        allowNull: false,
         type: Sequelize.DATE
       }
     });

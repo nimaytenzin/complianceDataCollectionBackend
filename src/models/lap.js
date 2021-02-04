@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
   lap.init({
     lap_name: DataTypes.STRING,
     thromde_id: DataTypes.INTEGER,
-    thromde_name: DataTypes.STRING,
+    thromde_name: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'lap',

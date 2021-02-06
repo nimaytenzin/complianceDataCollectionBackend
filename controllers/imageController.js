@@ -3,6 +3,19 @@ const fs = require('fs')
 //for image the fid corressponds to the id of the plots,footpath and roads and not the fid in their table per se
 
 module.exports = {
+    getImage(req,res){
+        return image
+        .findAll(
+            {
+                where: {
+                    fid: req.params.fid,
+                    ftype:req.params.ftype
+                  }
+            }
+        )
+        .then((data) => res.status(200).send(data))
+        .catch((error) => {res.status(400).send(error)})
+    },
 
        createImage(req, res){
         let fid =req.body.fid;

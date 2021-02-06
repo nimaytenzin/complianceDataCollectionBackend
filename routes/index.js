@@ -50,7 +50,7 @@ router.get('/api/roads/get-road/:lap_id/:fid', roadController.getSpecific)
 
 //image routes
 router.post('/api/images/add-image',imageController.createImage)
-
+router.get('/api/images/get-image/:ftype/:fid', imageController.getImage)
 
 //building Shapefile routes
 router.get('/api/shapefile/get-buildings/:lap_id', (req,res)=>{

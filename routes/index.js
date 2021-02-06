@@ -6,7 +6,7 @@ const plotController = require('../controllers/plotController');
 const roadController = require('../controllers/roadController');
 const thromdeController = require('../controllers/thromdeController')
 const footpathController = require('../controllers/footpathController')
-
+const imageController = require('../controllers/imageController')
 const {pool} = require('../dbconfig');
 const buildingController = require('../controllers/buildingController');
 
@@ -48,6 +48,8 @@ router.get('/api/roads/getByLap/:lap_id', roadController.getByLap)
 router.get('/api/roads/get-road/:lap_id/:fid', roadController.getSpecific)
 
 
+//image routes
+router.post('/api/images/add-image',imageController.createImage)
 
 
 //building Shapefile routes

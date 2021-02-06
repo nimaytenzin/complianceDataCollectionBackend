@@ -25,18 +25,27 @@
 #     "remarks": null
 # }
 
-PUT  http://localhost:3000/api/plots/update-plot/1/210  HTTP/1.1
+# PUT  http://localhost:3000/api/plots/update-plot/1/210  HTTP/1.1
+# content-type: application/json
+
+# {
+#     "fid":210,
+#     "lap_id":1,
+#     "plot_id":"1",
+#     "d_status":"1 Test",
+#     "plot_use" : "1",
+#     "max_height": "G+1",
+#     "setback_e": "1",
+#     "parking":24234,
+#     "remarks": null
+# }
+
+POST  http://localhost:3000/api/images/add-image  HTTP/1.1
 content-type: application/json
 
 {
     "fid":210,
-    "lap_id":1,
-    "plot_id":"1",
-    "d_status":"1 Test",
-    "plot_use" : "1",
-    "max_height": "G+1",
-    "setback_e": "1",
-    "parking":24234,
-    "remarks": null
+    "ftype":"road",
+    "uri":"1"
 }
 
